@@ -6,6 +6,7 @@ using SerilogTimings.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using CodeStream.VisualStudio.Framework.Extensions;
 
 namespace CodeStream.VisualStudio.Core.Logging {
 	public static class LogExtensions {

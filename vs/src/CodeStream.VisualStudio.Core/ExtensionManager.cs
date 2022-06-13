@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CodeStream.VisualStudio.Core.Extensions;
 using CodeStream.VisualStudio.Core.Logging;
 using CodeStream.VisualStudio.Core.Models;
+using CodeStream.VisualStudio.Framework.Extensions;
 using Serilog;
 
 namespace CodeStream.VisualStudio.Core

@@ -9,6 +9,8 @@ using Serilog;
 using StreamJsonRpc;
 using System;
 using System.Threading.Tasks;
+using CodeStream.VisualStudio.Framework.Extensions;
+using CodeStream.VisualStudio.Framework.Interfaces;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 

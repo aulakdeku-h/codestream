@@ -14,6 +14,7 @@ using StreamJsonRpc;
 using System;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using CodeStream.VisualStudio.Framework.Extensions;
 
 // ReSharper disable UnusedMember.Global
 

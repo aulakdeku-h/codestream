@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CodeStream.VisualStudio.Framework.Extensions;
 
 namespace CodeStream.VisualStudio.Core.Controllers {
 	public class AuthenticationController {

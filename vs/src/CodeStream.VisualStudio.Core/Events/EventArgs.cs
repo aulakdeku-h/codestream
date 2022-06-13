@@ -1,6 +1,5 @@
 ﻿using System;
 using CodeStream.VisualStudio.Core.Models;
-using Microsoft.VisualStudio.LiveShare;
 
 namespace CodeStream.VisualStudio.Core.Events {
 	public class EventBase { }
@@ -59,13 +58,6 @@ namespace CodeStream.VisualStudio.Core.Events {
 
 	public sealed class AutoHideMarkersEvent : EventBase {
 		public bool Value { get; set; }
-	}
-
-	public sealed class LiveShareStartedEvent : EventBase {
-		public CollaborationSession CollaborationSession { get; }
-		public LiveShareStartedEvent(CollaborationSession collaborationSession) {
-			CollaborationSession = collaborationSession;
-		}
 	}
 
 	public sealed class DocumentMarkerChangedEvent : EventBase {

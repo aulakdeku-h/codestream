@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows;
 using CodeStream.VisualStudio.Core.Models;
+using CodeStream.VisualStudio.Framework.Models;
 
 namespace CodeStream.VisualStudio.Core.Services {
 	public interface IBrowserService {

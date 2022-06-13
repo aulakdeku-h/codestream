@@ -1,6 +1,7 @@
 ﻿using CodeStream.VisualStudio.Core.Extensions;
 using System;
 using System.Text.RegularExpressions;
+using CodeStream.VisualStudio.Framework.Extensions;
 
 namespace CodeStream.VisualStudio.Core.Models {
 	public class CodeStreamDiffUri {

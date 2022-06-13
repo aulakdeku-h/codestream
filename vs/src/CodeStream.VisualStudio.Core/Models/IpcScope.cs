@@ -1,6 +1,7 @@
 ﻿using System;
 using CodeStream.VisualStudio.Core.Extensions;
 using CodeStream.VisualStudio.Core.Services;
+using CodeStream.VisualStudio.Framework.Extensions;
 using Newtonsoft.Json.Linq;
 
 namespace CodeStream.VisualStudio.Core.Models {

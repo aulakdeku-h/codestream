@@ -1,4 +1,6 @@
-﻿namespace CodeStream.VisualStudio.Core.Models {
+﻿using CodeStream.VisualStudio.Framework.Models;
+
+namespace CodeStream.VisualStudio.Core.Models {
 	public class LiveShareInviteToSessionRequest {
 		public string UserId { get; set; }
 	}
