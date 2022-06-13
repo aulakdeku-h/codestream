@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CodeStream.VisualStudio.Framework.Models;
 
 namespace CodeStream.VisualStudio.Core.Models {
 	public class GetRangeScmInfoRequest {

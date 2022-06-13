@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using CodeStream.VisualStudio.Core.Models;
+using CodeStream.VisualStudio.Framework.Models;
 using Newtonsoft.Json.Linq;
 using StreamJsonRpc;
 

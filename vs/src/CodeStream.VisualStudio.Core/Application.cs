@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using CodeStream.VisualStudio.Core.Annotations;
 using CodeStream.VisualStudio.Core.Extensions;
 using CodeStream.VisualStudio.Core.Properties;
+using CodeStream.VisualStudio.Framework.Extensions;
 
 namespace CodeStream.VisualStudio.Core {
 	public class Application {

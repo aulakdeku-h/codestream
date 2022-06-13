@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using CodeStream.VisualStudio.Core.Annotations;
 using CodeStream.VisualStudio.Core.Extensions;
+using CodeStream.VisualStudio.Framework.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
 // ReSharper disable ClassNeverInstantiated.Global
 

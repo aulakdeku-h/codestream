@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using CodeStream.VisualStudio.Core.Process;
 using CodeStream.VisualStudio.Core.Services;
+using CodeStream.VisualStudio.Framework.Interfaces;
 
 namespace CodeStream.VisualStudio.Core.LanguageServer {
 

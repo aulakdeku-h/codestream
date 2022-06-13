@@ -18,6 +18,7 @@ using System.ComponentModel.Composition;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using CodeStream.VisualStudio.Framework.Interfaces;
 
 namespace CodeStream.VisualStudio.Shell._2019.LanguageServer {
 
@@ -192,8 +193,8 @@ namespace CodeStream.VisualStudio.Shell._2019.LanguageServer {
 			_rpc = rpc;
 
 			// Slight hack to use camelCased properties when serializing requests
-			_rpc.JsonSerializer.ContractResolver = new CustomCamelCasePropertyNamesContractResolver(new HashSet<Type> { typeof(TelemetryProperties) });
-			_rpc.JsonSerializer.NullValueHandling = NullValueHandling.Ignore;
+			//_rpc.JsonSerializer.ContractResolver = new CustomCamelCasePropertyNamesContractResolver(new HashSet<Type> { typeof(TelemetryProperties) });
+			//_rpc.JsonSerializer.NullValueHandling = NullValueHandling.Ignore;
 
 			await OnAttachedForCustomMessageAsync();
 			Log.Debug(nameof(AttachForCustomMessageAsync));

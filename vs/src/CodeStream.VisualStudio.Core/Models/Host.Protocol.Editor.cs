@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeStream.VisualStudio.Framework.Models;
 
 namespace CodeStream.VisualStudio.Core.Models {
 

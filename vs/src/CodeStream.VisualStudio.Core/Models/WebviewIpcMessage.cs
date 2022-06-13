@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeStream.VisualStudio.Core.Logging;
+using CodeStream.VisualStudio.Framework.Models;
 using Newtonsoft.Json.Linq;
 using Serilog;
 

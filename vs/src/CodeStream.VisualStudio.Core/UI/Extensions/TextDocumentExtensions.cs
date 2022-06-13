@@ -1,6 +1,7 @@
 ﻿using System;
 using CodeStream.VisualStudio.Core.Extensions;
 using CodeStream.VisualStudio.Core.Models;
+using CodeStream.VisualStudio.Framework.Extensions;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 

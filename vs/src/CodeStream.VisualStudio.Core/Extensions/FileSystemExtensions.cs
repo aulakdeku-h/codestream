@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using CodeStream.VisualStudio.Framework.Extensions;
 
 namespace CodeStream.VisualStudio.Core.Extensions
 {

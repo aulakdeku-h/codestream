@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeStream.VisualStudio.Core.Logging;
+using CodeStream.VisualStudio.Framework.Models;
 using Newtonsoft.Json;
 
 namespace CodeStream.VisualStudio.Core.Models {

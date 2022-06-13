@@ -1,5 +1,7 @@
 ﻿using System;
 using CodeStream.VisualStudio.Core.Models;
+using CodeStream.VisualStudio.Framework.Extensions;
+using CodeStream.VisualStudio.Framework.Models;
 using Serilog;
 using Serilog.Events;
 

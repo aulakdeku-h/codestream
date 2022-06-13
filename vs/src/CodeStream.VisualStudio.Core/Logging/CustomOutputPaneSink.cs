@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using CodeStream.VisualStudio.Core.Extensions;
+using CodeStream.VisualStudio.Framework.Extensions;
 using Serilog.Formatting.Json;
 
 namespace CodeStream.VisualStudio.Core.Logging {

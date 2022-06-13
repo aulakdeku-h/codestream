@@ -1,4 +1,6 @@
-﻿namespace CodeStream.VisualStudio.Core.Models {
+﻿using CodeStream.VisualStudio.Framework.Models;
+
+namespace CodeStream.VisualStudio.Core.Models {
 	public class WebviewDidInitializeNotificationType : NotificationType<EmptyRequestTypeParams> {
 		public const string MethodName = "host/didInitialize";
 		public override string Method => MethodName;

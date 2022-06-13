@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using CodeStream.VisualStudio.Framework.Models;
 
 namespace CodeStream.VisualStudio.Core.Models {
 	public class DidChangeConnectionStatusNotification {

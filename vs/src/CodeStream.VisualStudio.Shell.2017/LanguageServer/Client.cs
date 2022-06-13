@@ -17,6 +17,7 @@ using System.ComponentModel.Composition;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using CodeStream.VisualStudio.Framework.Interfaces;
 
 namespace CodeStream.VisualStudio.Shell._2017.LanguageServer {
 

@@ -1,4 +1,5 @@
 ﻿using CodeStream.VisualStudio.Core.Extensions;
+using CodeStream.VisualStudio.Framework.Extensions;
 
 namespace CodeStream.VisualStudio.Core.Logging.Sanitizer
 {
