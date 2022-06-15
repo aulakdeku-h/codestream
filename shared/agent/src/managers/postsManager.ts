@@ -1522,6 +1522,7 @@ export class PostsManager extends EntityManagerBase<CSPost> {
 		);
 		let modifiedFiles: ModifiedFile[];
 		let startCommit = repoChange.startCommit;
+		const endCommit = repoChange.endCommit;
 		let leftBaseShaForFirstChangesetInThisRepo: string | undefined = undefined;
 		let rightBaseShaForFirstChangesetInThisRepo: string | undefined = undefined;
 		if (amendingReviewId) {
@@ -1599,7 +1600,11 @@ export class PostsManager extends EntityManagerBase<CSPost> {
 		// otherwise the startCommit is probably the parent of the oldest commit
 		// so that means just take the whole commit list
 		const startIndex = scm.commits.findIndex(commit => commit.sha === startCommit);
-		const commits = startIndex >= 0 ? scm.commits.slice(0, startIndex) : scm.commits;
+		const endIndex = scm.commits.findIndex(commit => commit.sha === endCommit);
+		// starting commit is at the end and vice versa
+		const sliceStart = endIndex >= 0 ? endIndex : 0;
+		const sliceEnd = startIndex >= 0 ? startIndex : undefined;
+		const commits = scm.commits.slice(sliceStart, sliceEnd);
 
 		// perform a diff against the most recent pushed commit
 		const pushedCommit = scm.commits.find(commit => !commit.localOnly);

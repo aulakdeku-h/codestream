@@ -625,12 +625,26 @@ class ReviewForm extends React.Component<Props, State> {
 			if (!startCommit && statusInfo.scm && statusInfo.scm.startCommit) {
 				let limitedLength: number | undefined = undefined;
 
-				const index = this.getRowIndex(statusInfo.scm.startCommit);
-				if (index != null) {
-					const identifier = this.getRowIdentifier(index - 1);
-					if (identifier != null) {
-						this.changeSelectionRange(identifier);
-					}
+				const startCommitIndex = this.getRowIndex(statusInfo.scm.startCommit);
+				if (startCommitIndex != null) {
+					// const identifier = this.getRowIdentifier(startCommitIndex - 1);
+					// if (identifier != null) {
+					// 	this.changeSelectionRange(identifier);
+					// }
+
+					const excludeCommit: { [sha: string]: boolean } = {};
+					statusInfo.scm.commits?.forEach((commit, index) => {
+						excludeCommit[commit.sha] = index >= startCommitIndex;
+					});
+
+					this.setState(
+						{
+							bottomSelectionIndex: startCommitIndex - 1,
+							startCommit: statusInfo.scm.startCommit,
+							excludeCommit
+						},
+						() => this.handleRepoChange()
+					);
 				}
 
 				if (
@@ -819,6 +833,7 @@ class ReviewForm extends React.Component<Props, State> {
 			selectedTags,
 			repoStatus,
 			startCommit,
+			topSelectionIndex,
 			excludeCommit,
 			excludedFiles,
 			allReviewersMustApprove,
@@ -941,6 +956,8 @@ class ReviewForm extends React.Component<Props, State> {
 						{
 							scm,
 							startCommit,
+							endCommit:
+								topSelectionIndex > 0 ? this.getRowIdentifier(topSelectionIndex) : undefined,
 							excludeCommit,
 							excludedFiles: keyFilter(excludedFiles),
 							// new files will originally have excludedFiles[file] = true
@@ -1553,13 +1570,13 @@ class ReviewForm extends React.Component<Props, State> {
 		const { topSelectionIndex, bottomSelectionIndex, repoStatus } = this.state;
 		const topIndex = Math.min(
 			topSelectionIndex,
-			bottomSelectionIndex || Number.MAX_SAFE_INTEGER,
-			index || Number.MAX_SAFE_INTEGER
+			bottomSelectionIndex,
+			index != null ? index : Number.MAX_SAFE_INTEGER
 		);
 		const bottomIndex = Math.max(
 			topSelectionIndex,
-			bottomSelectionIndex || Number.MIN_SAFE_INTEGER,
-			index || Number.MIN_SAFE_INTEGER
+			bottomSelectionIndex,
+			index != null ? index : Number.MIN_SAFE_INTEGER
 		);
 		const commits = repoStatus?.scm?.commits;
 		if (commits == null) return;
