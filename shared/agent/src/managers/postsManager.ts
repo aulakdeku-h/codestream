@@ -1619,7 +1619,7 @@ export class PostsManager extends EntityManagerBase<CSPost> {
 		let leftBaseAuthor;
 		let leftDiffs: ParsedDiff[];
 
-		const newestCommitNotInReview = scm.commits[commits.length];
+		const newestCommitNotInReview = scm.commits[sliceEnd != undefined ? sliceEnd : commits.length];
 		const userEmail = await git.getConfig(scm.repoPath, "user.email");
 		const ancestorSearchStartingSha =
 			oldestCommitInReview != null ? oldestCommitInReview.sha : "HEAD";
@@ -1743,11 +1743,22 @@ export class PostsManager extends EntityManagerBase<CSPost> {
 			rightBaseAuthor = leftBaseAuthor;
 		}
 
+		const rightContentSha = commits[0]?.sha;
 		rightDiffs = (
-			await git.getDiffs(scm.repoPath, { includeSaved, includeStaged }, rightBaseSha)
+			await git.getDiffs(
+				scm.repoPath,
+				{ includeSaved, includeStaged },
+				rightBaseSha,
+				rightContentSha
+			)
 		).filter(removeExcluded);
 		rightReverseDiffs = (
-			await git.getDiffs(scm.repoPath, { includeSaved, includeStaged, reverse: true }, rightBaseSha)
+			await git.getDiffs(
+				scm.repoPath,
+				{ includeSaved, includeStaged, reverse: true },
+				rightBaseSha,
+				rightContentSha
+			)
 		).filter(removeExcluded);
 		rightDiffs.push(...newFileDiffs);
 		rightReverseDiffs.push(...newFileReverseDiffs);
@@ -1756,7 +1767,8 @@ export class PostsManager extends EntityManagerBase<CSPost> {
 			await git.getDiffs(
 				scm.repoPath,
 				{ includeSaved, includeStaged, reverse: true },
-				latestCommitSha
+				latestCommitSha,
+				rightContentSha
 			)
 		).filter(removeExcluded);
 		rightToLatestCommitDiffs.push(...newFileReverseDiffs);
@@ -1764,7 +1776,12 @@ export class PostsManager extends EntityManagerBase<CSPost> {
 		let latestCommitToRightDiffs =
 			includeSaved || includeStaged
 				? (
-						await git.getDiffs(scm.repoPath, { includeSaved, includeStaged }, latestCommitSha)
+						await git.getDiffs(
+							scm.repoPath,
+							{ includeSaved, includeStaged },
+							latestCommitSha,
+							rightContentSha
+						)
 				  ).filter(removeExcluded)
 				: [];
 		latestCommitToRightDiffs.push(...newFileDiffs);
@@ -1796,7 +1813,7 @@ export class PostsManager extends EntityManagerBase<CSPost> {
 				rightBaseSha,
 				rightDiffsCompressed: compressToBase64(JSON.stringify(rightDiffs)),
 				rightReverseDiffsCompressed: compressToBase64(JSON.stringify(rightReverseDiffs)),
-				latestCommitSha,
+				latestCommitSha: rightContentSha || latestCommitSha,
 				rightToLatestCommitDiffsCompressed: compressToBase64(
 					JSON.stringify(rightToLatestCommitDiffs)
 				), // for backtracking
