@@ -507,6 +507,7 @@ class ReviewForm extends React.Component<Props, State> {
 				teamMates,
 				currentUser,
 				isEditing,
+				isAmending,
 				inviteUsersOnTheFly,
 				blameMap = {},
 				editingReview
@@ -627,11 +628,6 @@ class ReviewForm extends React.Component<Props, State> {
 
 				const startCommitIndex = this.getRowIndex(statusInfo.scm.startCommit);
 				if (startCommitIndex != null) {
-					// const identifier = this.getRowIdentifier(startCommitIndex - 1);
-					// if (identifier != null) {
-					// 	this.changeSelectionRange(identifier);
-					// }
-
 					const excludeCommit: { [sha: string]: boolean } = {};
 					statusInfo.scm.commits?.forEach((commit, index) => {
 						excludeCommit[commit.sha] = index >= startCommitIndex;
@@ -674,10 +670,12 @@ class ReviewForm extends React.Component<Props, State> {
 					}
 				}
 			}
-			// if (isAmending && statusInfo.scm && statusInfo.scm.branch !== this.state.editingReviewBranch) {
-			// 	this.setState({ isLoadingScm: false, scmError: true });
-			// 	return;
-			// }
+
+			if (isAmending && startCommit) {
+				this.setState({
+					bottomSelectionIndex: (statusInfo?.scm?.commits?.length || 0) - 1
+				});
+			}
 
 			if (statusInfo.scm) {
 				const authorsBlameData = {};
@@ -905,6 +903,8 @@ class ReviewForm extends React.Component<Props, State> {
 							repoId: scm!.repoId,
 							scm,
 							startCommit,
+							endCommit:
+								topSelectionIndex > 0 ? this.getRowIdentifier(topSelectionIndex) : undefined,
 							excludeCommit,
 							excludedFiles: keyFilter(excludedFiles),
 							// new files will originally have excludedFiles[file] = true
@@ -1471,31 +1471,42 @@ class ReviewForm extends React.Component<Props, State> {
 		const { commits } = scm;
 		if (!commits) return;
 
+		const { isAmending } = this.props;
 		const { topSelectionIndex, bottomSelectionIndex } = this.state;
 		let newTopSelectionIndex, newBottomSelectionIndex;
 		const index = this.getRowIndex(identifier);
 		if (index == null) return;
 
-		if (index < topSelectionIndex) {
-			// expanding selection up
-			newTopSelectionIndex = index;
+		if (isAmending) {
+			if (index === topSelectionIndex && index < commits.length - 1) {
+				// deselecting top of selection, unless it's the last bottom row
+				newTopSelectionIndex = index + 1;
+			} else {
+				newTopSelectionIndex = index;
+			}
 			newBottomSelectionIndex = bottomSelectionIndex;
-		} else if (index > bottomSelectionIndex) {
-			// expanding selection down
-			newTopSelectionIndex = topSelectionIndex;
-			newBottomSelectionIndex = index;
-		} else if (index === topSelectionIndex && index < bottomSelectionIndex) {
-			// deselecting top row, if more than one row is selected
-			newTopSelectionIndex = topSelectionIndex + 1;
-			newBottomSelectionIndex = bottomSelectionIndex;
-		} else if (index === bottomSelectionIndex && index > topSelectionIndex) {
-			// deselecting bottom row, if more than one row is selected
-			newTopSelectionIndex = topSelectionIndex;
-			newBottomSelectionIndex = bottomSelectionIndex - 1;
 		} else {
-			// within the current selection
-			newTopSelectionIndex = index;
-			newBottomSelectionIndex = index;
+			if (index < topSelectionIndex) {
+				// expanding selection up
+				newTopSelectionIndex = index;
+				newBottomSelectionIndex = bottomSelectionIndex;
+			} else if (index > bottomSelectionIndex) {
+				// expanding selection down
+				newTopSelectionIndex = topSelectionIndex;
+				newBottomSelectionIndex = index;
+			} else if (index === topSelectionIndex && index < bottomSelectionIndex) {
+				// deselecting top row, if more than one row is selected
+				newTopSelectionIndex = topSelectionIndex + 1;
+				newBottomSelectionIndex = bottomSelectionIndex;
+			} else if (index === bottomSelectionIndex && index > topSelectionIndex) {
+				// deselecting bottom row, if more than one row is selected
+				newTopSelectionIndex = topSelectionIndex;
+				newBottomSelectionIndex = bottomSelectionIndex - 1;
+			} else {
+				// within the current selection
+				newTopSelectionIndex = index;
+				newBottomSelectionIndex = index;
+			}
 		}
 
 		const excludeCommit: { [sha: string]: boolean } = {};
