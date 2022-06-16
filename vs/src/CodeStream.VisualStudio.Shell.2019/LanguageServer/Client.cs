@@ -2,13 +2,11 @@
 using CodeStream.VisualStudio.Core.Events;
 using CodeStream.VisualStudio.Core.LanguageServer;
 using CodeStream.VisualStudio.Core.Logging;
-using CodeStream.VisualStudio.Core.Models;
 using CodeStream.VisualStudio.Core.Services;
 using Microsoft;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.LanguageServer.Client;
 using Microsoft.VisualStudio.Threading;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using StreamJsonRpc;
@@ -103,7 +101,7 @@ namespace CodeStream.VisualStudio.Shell._2019.LanguageServer {
 				return CustomMessageTargetBase;
 			}
 		}
-
+		
 		public async Task<Connection> ActivateAsync(CancellationToken token) {
 			await Task.Yield();
 			Connection connection = null;
@@ -311,5 +309,6 @@ namespace CodeStream.VisualStudio.Shell._2019.LanguageServer {
 
 			_disposed = true;
 		}
+
 	}
 }
