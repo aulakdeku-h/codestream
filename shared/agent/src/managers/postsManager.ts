@@ -1560,7 +1560,8 @@ export class PostsManager extends EntityManagerBase<CSPost> {
 				includeStaged,
 				uri: URI.file(scm.repoPath).toString(),
 				currentUserEmail: "", // FIXME
-				startCommit
+				startCommit,
+				endCommit
 			});
 			modifiedFiles = statusFromBeginningOfReview.scm!.modifiedFiles.filter(
 				mf => !excludedFiles.includes(mf.file)
