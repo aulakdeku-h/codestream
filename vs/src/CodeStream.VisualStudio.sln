@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeStream.VisualStudio.Core", "CodeStream.VisualStudio.Core\CodeStream.VisualStudio.Core.csproj", "{1A29B558-C55A-4769-AD37-69F903ED6EB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeStream.VisualStudio.Core", "CodeStream.VisualStudio.Core\CodeStream.VisualStudio.Core.csproj", "{1A29B558-C55A-4769-AD37-69F903ED6EB3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9478D8FC-611C-4663-9953-2284BAE2545F}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,13 +18,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeStream.VisualStudio.CodeLens", "CodeStream.VisualStudio.CodeLens\CodeStream.VisualStudio.CodeLens.csproj", "{31EB1B96-34E8-4E37-872D-4ED7363C95D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeStream.VisualStudio.Vsix.x86", "CodeStream.VisualStudio.Vsix.x86\CodeStream.VisualStudio.Vsix.x86.csproj", "{915CB35E-7342-45EA-9450-C39D07B608D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeStream.VisualStudio.Vsix.x86", "CodeStream.VisualStudio.Vsix.x86\CodeStream.VisualStudio.Vsix.x86.csproj", "{915CB35E-7342-45EA-9450-C39D07B608D7}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CodeStream.VisualStudio.Shared", "CodeStream.VisualStudio.Shared\CodeStream.VisualStudio.Shared.shproj", "{8EF9AEBD-EF04-4AAD-A184-C16E85EB6EFF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeStream.VisualStudio.Framework", "CodeStream.VisualStudio.Framework\CodeStream.VisualStudio.Framework.csproj", "{89A17DFF-415D-4DAF-A489-1F3C25AF0C35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeStream.VisualStudio.UnitTests", "CodeStream.VisualStudio.UnitTests\CodeStream.VisualStudio.UnitTests.csproj", "{5170B4CF-9657-4AB1-BC9E-F91D90076DF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeStream.VisualStudio.UnitTests", "CodeStream.VisualStudio.UnitTests\CodeStream.VisualStudio.UnitTests.csproj", "{5170B4CF-9657-4AB1-BC9E-F91D90076DF3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{92D50BB2-CC9A-44A7-9387-A1C45B1CD9E8}"
 EndProject
@@ -52,8 +52,8 @@ Global
 		{31EB1B96-34E8-4E37-872D-4ED7363C95D9}.Release|x86.Build.0 = Release|x86
 		{915CB35E-7342-45EA-9450-C39D07B608D7}.Debug|x86.ActiveCfg = Debug|x86
 		{915CB35E-7342-45EA-9450-C39D07B608D7}.Debug|x86.Build.0 = Debug|x86
-		{915CB35E-7342-45EA-9450-C39D07B608D7}.Release|x86.ActiveCfg = Release|Any CPU
-		{915CB35E-7342-45EA-9450-C39D07B608D7}.Release|x86.Build.0 = Release|Any CPU
+		{915CB35E-7342-45EA-9450-C39D07B608D7}.Release|x86.ActiveCfg = Release|x86
+		{915CB35E-7342-45EA-9450-C39D07B608D7}.Release|x86.Build.0 = Release|x86
 		{89A17DFF-415D-4DAF-A489-1F3C25AF0C35}.Debug|x86.ActiveCfg = Debug|x86
 		{89A17DFF-415D-4DAF-A489-1F3C25AF0C35}.Debug|x86.Build.0 = Debug|x86
 		{89A17DFF-415D-4DAF-A489-1F3C25AF0C35}.Release|x86.ActiveCfg = Release|x86

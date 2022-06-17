@@ -229,8 +229,8 @@
 			</Button>
 		</Buttons>
 		<Bitmaps>
-			<Bitmap guid="guidImages" href="..\Resources\Sprites.png" usedList="logo, auth, user, empty4, empty5, empty6" />
-			<Bitmap guid="guidImagesCommands" href="..\Resources\CommandsSprites.png" usedList="comment, issue, bookmark, permalink, instantPermalink, review" />
+			<Bitmap guid="guidImages" href="..\resources\Sprites.png" usedList="logo, auth, user, empty4, empty5, empty6" />
+			<Bitmap guid="guidImagesCommands" href="..\resources\CommandsSprites.png" usedList="comment, issue, bookmark, permalink, instantPermalink, review" />
 		</Bitmaps>
 	</Commands>
 
