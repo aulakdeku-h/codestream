@@ -35,8 +35,6 @@ namespace CodeStream.VisualStudio.UnitTests.UI.Adornments {
 			textViewLineCollection.Setup(_ => _.FirstVisibleLine).Returns(lines[0]);
 			textViewLineCollection.Setup(_ => _.LastVisibleLine).Returns(lines[4]);
 			textViewLineCollection.Setup(_ => _.FormattedSpan).Returns(new SnapshotSpan());
-			//TODO figure out why textViewLineCollection throws in the foreach
-			_mockWpfTextView.Setup(_ => _.TextViewLines).Returns(textViewLineCollection.Object);
 		}
 
 		[TestCleanup]

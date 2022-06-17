@@ -1,18 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
     <AssemblyName>CodeStream.VisualStudio.CodeLens</AssemblyName>
     <RootNamespace>CodeStream.VisualStudio.CodeLens</RootNamespace>
-    <Platforms>AnyCPU;x86</Platforms>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

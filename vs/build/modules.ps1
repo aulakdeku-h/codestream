@@ -3,8 +3,7 @@
 New-Module -ScriptBlock {
     $rootDirectory = Split-Path ($PSScriptRoot)
     $scriptsDirectory = Join-Path $rootDirectory "build"
-    $nuget = Join-Path $rootDirectory "tools\nuget\nuget.exe"
-    Export-ModuleMember -Variable scriptsDirectory,rootDirectory,nuget
+    Export-ModuleMember -Variable scriptsDirectory,rootDirectory
 }
 
 New-Module -ScriptBlock {

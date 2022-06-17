@@ -1,16 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
     <AssemblyName>CodeStream.VisualStudio.Framework</AssemblyName>
     <RootNamespace>CodeStream.VisualStudio.Framework</RootNamespace>
-    <Platforms>AnyCPU;x86</Platforms>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-    <NoWarn />
   </PropertyGroup>
 
   <ItemGroup>

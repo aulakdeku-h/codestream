@@ -65,9 +65,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\Margins\ICodeStreamMarginProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Margins\IGlyphMetadata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\PredefinedCodestreamNames.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Settings\OptionsDialogPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)UI\Settings\OptionsDialogPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\SuggestedActions\CodemarkSuggestedActionsSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\SuggestedActions\CodemarkSuggestedActionsSourceProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Taggers\DocumentMarkTagger.cs" />

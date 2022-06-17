@@ -1,7 +1,7 @@
 Set-StrictMode -Version Latest
 
 New-Module -ScriptBlock {
-    $gitHubDirectory = Join-Path $rootDirectory src\CodeStream.VisualStudio
+    $gitHubDirectory = Join-Path $rootDirectory src\CodeStream.VisualStudio.Vsix.x86
 
     function Get-VsixManifestPath {
         Join-Path $gitHubDirectory source.extension.vsixmanifest

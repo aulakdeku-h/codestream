@@ -14,7 +14,7 @@ Write-Host "TargetDir=$($TargetDir)"
 Write-Host ""
 
 if ($ConfigurationName -eq "Debug") {
-	pushd ..\..\..\..\..\build
+	pushd ..\..\build
 	& .\Extract-Pdb.ps1
 	popd
 }

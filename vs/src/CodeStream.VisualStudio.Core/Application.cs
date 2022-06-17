@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using CodeStream.VisualStudio.Core.Annotations;
-using CodeStream.VisualStudio.Core.Extensions;
 using CodeStream.VisualStudio.Core.Properties;
 using CodeStream.VisualStudio.Framework.Extensions;
 

@@ -22,11 +22,6 @@ Param(
 	[Alias("t")]
 	[double] $VSVersion = 16.0,
 
-	# TODO: Get this to work -- i.e. auto install into a vs experiemental instance
-	# [Parameter(Mandatory = $false)]
-	# [Alias("d")]
-	# [switch] $ExperimentalDeploy = $false,
-
 	[Parameter(Mandatory = $false)]
 	[Alias("h")]
 	[Switch] $Help = $false
@@ -69,7 +64,7 @@ function Print-Help {
 	Write-Host -object "  Mode (-m)                    - [String] - Debug or Release."
 	Write-Host -object "  Verbosity (-v)               - [String] - Logging verbosity (quiet, minimal, normal, detailed, or diagnostic)."
 	Write-Host -object ""
-	Write-Host -object "  VSVersion (-t)               - [String] - Currently only 15.0."
+	Write-Host -object "  VSVersion (-t)               - [String] - Currently only 16.0."
 	Write-Host -object ""
 	exit 0
 }
@@ -109,15 +104,15 @@ function Build-AgentAndWebview {
 function Build-Extension {
 	$timer = Start-Timer
 
-	# https://stackoverflow.com/questions/42874400/how-to-build-a-visual-studio-2017-vsix-using-msbuild
 	$msbuild = ""
 	$vstest = ""
+
 	if ($VSVersion -eq 16.0) {
-		$msbuild = "C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/MSBuild/Current/Bin/MSBuild.exe"		
+		$msbuild = "C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/MSBuild/Current/Bin/MSBuild.exe"		
+		$vstest = "C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/IDE/CommonExtensions/Microsoft/TestWindow/vstest.console.exe"
 	}
-	$vstest = "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/Common7/IDE/CommonExtensions/Microsoft/TestWindow/vstest.console.exe"
-	if (!(Test-Path -Path $vstest)) {
-		$vstest = "C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/Common7/IDE/CommonExtensions/Microsoft/TestWindow/vstest.console.exe"
+	else {
+		throw "Visual Studio version 16.0 is the only supported version. $($VSVersion) was supplied."
 	}
 
 	$OutputDir = $(Join-Path $root "build/artifacts/$($platform)/$($Mode)")
@@ -127,7 +122,7 @@ function Build-Extension {
 	Remove-Item $("$($OutputDir)/*") -Recurse -Force
 
 	Write-Log "Restoring packages..."
-	& ./build/nuget.exe restore src/CodeStream.VisualStudio.sln
+	& $msbuild src/CodeStream.VisualStudio.sln -t:Restore
 
 	Write-Log "Running MSBuild..."
 	& $msbuild src/CodeStream.VisualStudio.sln /p:AllowUnsafeBlocks=true /verbosity:$Verbosity /target:$target /p:Configuration=$Mode /p:Platform=$platform /p:OutputPath=$OutputDir /p:VisualStudioVersion=$VSVersion /p:DeployExtension=$DeployExtension
@@ -166,7 +161,6 @@ if ($CI) {
 	$Quick = $false
 	$Mode = "Release"
 	$Verbosity = "diagnostic"
-	# $ExperimentalDeploy = $false
 
 	Write-Log "Running in CI mode..."
 }

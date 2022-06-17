@@ -105,10 +105,4 @@ Write-Output ""
  if ($commit) {
      write-output "committing version change"
      commit-version $newversion
-
-#     if ($push) {
-#         write-output "pushing version change"
-#         $branch = & $git rev-parse --abbrev-ref head
-#         push-changes $branch
-#     }
  }

@@ -1,165 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5170B4CF-9657-4AB1-BC9E-F91D90076DF3}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CodeStream.VisualStudio.UnitTests</RootNamespace>
     <AssemblyName>CodeStream.VisualStudio.UnitTests</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <RootNamespace>CodeStream.VisualStudio.UnitTests</RootNamespace>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
+    <PackageReference Include="CompositionTests" Version="2.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Validation" Version="16.9.32" />
+    <PackageReference Include="Moq" Version="4.18.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
+    <PackageReference Include="System.Reactive" Version="4.1.5" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="CompositionTests.cs" />
-    <Compile Include="Core\Logging\Sanitizer\SecretsSanitizingFormatRuleTests.cs" />
-    <Compile Include="Core\Models\CodeStreamDiffUriTest.cs" />
-    <Compile Include="Events\EventAggregatorTests.cs" />
-    <Compile Include="Extensions\ColorExtensionsTest.cs" />
-    <Compile Include="Extensions\DynamicExtensionsTests.cs" />
-    <Compile Include="Extensions\JsonExtensionsTests.cs" />
-    <Compile Include="Extensions\StringExtensionsTest.cs" />
-    <Compile Include="Extensions\UriExtensionsTests.cs" />
-    <Compile Include="LanguageServer\CustomCamelCasePropertyNamesContractResolverTests.cs" />
-    <Compile Include="LanguageServer\ExtensionsTest.cs" />
-    <Compile Include="Models\CamelCaseStringEnumConverterTests.cs" />
-    <Compile Include="Models\EditorSelectionTests.cs" />
-    <Compile Include="Models\WebviewIpcMessageTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\CredentialsServiceTests.cs" />
-    <Compile Include="Services\DotNetBrowserServiceTests.cs" />
-    <Compile Include="Stubs\OptionsDialogPageStub.cs" />
-    <Compile Include="Stubs\CredentialsServiceStub.cs" />
-    <Compile Include="UI\Adornments\HighlightAdornmentManagerTests.cs" />
-    <Compile Include="UI\TextViewCreationListenerTests.cs" />
-    <Compile Include="UI\TextViewExtensionsTests.cs" />
-    <Compile Include="Stubs\TextViewRoleSet.cs" />
-    <Compile Include="UI\TextViewRolesTest.cs" />
-    <Compile Include="WebViewRouterTests.cs" />
+    <ProjectReference Include="..\CodeStream.VisualStudio.Framework\CodeStream.VisualStudio.Framework.csproj" />
+    <ProjectReference Include="..\CodeStream.VisualStudio.Vsix.x86\CodeStream.VisualStudio.Vsix.x86.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CodeStream.VisualStudio.Core\CodeStream.VisualStudio.Core.csproj">
-      <Project>{1a29b558-c55a-4769-ad37-69f903ed6eb3}</Project>
-      <Name>CodeStream.VisualStudio.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeStream.VisualStudio.Framework\CodeStream.VisualStudio.Framework.csproj">
-      <Project>{89A17DFF-415D-4DAF-A489-1F3C25AF0C35}</Project>
-      <Name>CodeStream.VisualStudio.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CodeStream.VisualStudio.Vsix.x86\CodeStream.VisualStudio.Vsix.x86.csproj">
-      <Project>{915CB35E-7342-45EA-9450-C39D07B608D7}</Project>
-      <Name>CodeStream.VisualStudio.Vsix.x86</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
+
   <ItemGroup>
     <Content Include="CompositionTests.VerifyComposition.approved.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="CompositionTests">
-      <Version>2.0.2</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.SDK">
-      <Version>16.9.31025.194</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Validation">
-      <Version>16.9.32</Version>
-    </PackageReference>
-    <PackageReference Include="Moq">
-      <Version>4.18.1</Version>
-    </PackageReference>
-    <PackageReference Include="MSTest.TestAdapter">
-      <Version>2.2.10</Version>
-    </PackageReference>
-    <PackageReference Include="MSTest.TestFramework">
-      <Version>2.2.10</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.2</Version>
-    </PackageReference>
-    <PackageReference Include="System.Net.Http">
-      <Version>4.3.4</Version>
-    </PackageReference>
-    <PackageReference Include="System.Reactive">
-      <Version>4.1.5</Version>
-    </PackageReference>
-    <PackageReference Include="System.Threading.Tasks.Extensions">
-      <Version>4.5.4</Version>
-    </PackageReference>
-  </ItemGroup>
+
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>
