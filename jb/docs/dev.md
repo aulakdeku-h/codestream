@@ -21,7 +21,21 @@ The CodeStream clients all live in a single git mono-repo. Each IDE has their ow
 
 ## Build & Run
 
-- ensure you have your gradle/JVM set to a version 11 (temurin-11 for example)
+On macos, due to a strange bug in [byte-buddy or JBR jvm](https://github.com/raphw/byte-buddy/issues/732), you need
+to copy the JBR jvm to a directory without spaces. If you do not, you will not be able to run tests. 
+(symbolic link does no twork) For example:
+
+```shell
+cd ~
+mkdir jbr
+cp -r  /Applications/IntelliJ\ IDEA.app/Contents/jbr/Contents/Home/* jbr/
+export JAVA_HOME="$HOME/jbr"
+export PATH="$JAVA_HOME/bin:$PATH"
+```
+
+and be sure to setup JetBrains project SDK to use `~/jbr`
+
+- ensure you have your gradle/JVM set to a JetBrains Java version 11
 - run gradle task `buildDependencies` once (it will `run npm install`, etc for dependencies)
 - run gradle task `buildDebugDependencies`
 - ensure the `jb [runIde]` configuration is selected and run in debug mode (click the :bug: icon to start)
