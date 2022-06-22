@@ -29,7 +29,6 @@ namespace CodeStream.VisualStudio.Packages {
 
 		public static async System.Threading.Tasks.Task TryTriggerLspActivationAsync(ILogger log) {
 			log.Debug($"{nameof(TryTriggerLspActivationAsync)} starting...");
-			await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 			var hasActiveEditor = false;
 			EnvDTE.DTE dte = null;
 			try {

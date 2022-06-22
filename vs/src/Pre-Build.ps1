@@ -30,7 +30,7 @@ Write-Host ""
 Write-Host ""
 
 Write-Host "Possibly deleting old local license file '$($LocalLicenseFile)'..."
-if (Test-Path -Path "$($LocalLicenseFile)") {	
+if (Test-Path -Path "$($LocalLicenseFile)") {
 	Remove-Item "$($LocalLicenseFile)" -Force
 	Write-Host "Deleted old local license completed."
 }

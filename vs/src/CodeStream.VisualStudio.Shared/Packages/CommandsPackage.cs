@@ -48,7 +48,6 @@ namespace CodeStream.VisualStudio.Packages {
 				((IServiceContainer)this).AddService(typeof(SToolWindowProvider), CreateService, true);
 
 				_componentModel = await GetServiceAsync(typeof(SComponentModel)) as IComponentModel;
-				Assumes.Present(_componentModel);
 				_sessionService = _componentModel.GetService<ISessionService>();
 
 				var settingsServiceFactory = _componentModel?.GetService<ISettingsServiceFactory>();

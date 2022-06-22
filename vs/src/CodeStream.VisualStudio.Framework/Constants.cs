@@ -12,5 +12,7 @@
 				public const string Since = "${since}";
 			}
 		}
+
+		public static string CodeStreamCodeStream => "codestream.codestream";
 	}
 }

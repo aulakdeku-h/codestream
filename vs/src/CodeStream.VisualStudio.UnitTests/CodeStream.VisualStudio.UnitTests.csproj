@@ -5,9 +5,34 @@
     <RootNamespace>CodeStream.VisualStudio.UnitTests</RootNamespace>
   </PropertyGroup>
 
+	<PropertyGroup>
+		<Platforms>x86;x64</Platforms>
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+		<OutputPath>bin\x86\Debug\</OutputPath>
+		<PlatformTarget>x86</PlatformTarget>
+		<DefineConstants>DEBUG;TRACE;X86</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<NoWarn />
+		<WarningsAsErrors />
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+		<OutputPath>bin\x64\Debug\</OutputPath>
+		<PlatformTarget>x64</PlatformTarget>
+		<DefineConstants>DEBUG;TRACE;X64</DefineConstants>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<NoWarn />
+		<WarningsAsErrors />
+	</PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="CompositionTests" Version="2.0.2" />
-    <PackageReference Include="Microsoft.VisualStudio.Validation" Version="16.9.32" />
+    <PackageReference Include="Microsoft.VisualStudio.SDK.EmbedInteropTypes" Version="15.0.36" />
     <PackageReference Include="Moq" Version="4.18.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
@@ -16,7 +41,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CodeStream.VisualStudio.CodeLens\CodeStream.VisualStudio.CodeLens.csproj" />
+    <ProjectReference Include="..\CodeStream.VisualStudio.Core\CodeStream.VisualStudio.Core.csproj" />
     <ProjectReference Include="..\CodeStream.VisualStudio.Framework\CodeStream.VisualStudio.Framework.csproj" />
+    <ProjectReference Include="..\CodeStream.VisualStudio.Services\CodeStream.VisualStudio.Services.csproj" />
     <ProjectReference Include="..\CodeStream.VisualStudio.Vsix.x86\CodeStream.VisualStudio.Vsix.x86.csproj" />
   </ItemGroup>
 

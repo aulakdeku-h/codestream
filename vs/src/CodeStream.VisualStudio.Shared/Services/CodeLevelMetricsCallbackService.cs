@@ -52,8 +52,6 @@ namespace CodeStream.VisualStudio.Services {
 			IEventAggregator eventAggregator,
 			[Import(typeof(SVsServiceProvider))] IServiceProvider serviceProvider) {
 
-			ThreadHelper.ThrowIfNotOnUIThread();
-
 			_codeStreamAgentService = codeStreamAgentService;
 			_sessionService = sessionService;
 			_settingsServiceFactory = settingsServiceFactory;

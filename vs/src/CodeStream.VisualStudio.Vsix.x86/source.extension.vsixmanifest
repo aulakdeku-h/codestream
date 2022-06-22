@@ -12,20 +12,23 @@
         <Tags>gitlab;collaboration;github;review;slack</Tags>
     </Metadata>
     <Installation Experimental="false" AllUsers="true">
-        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.2, 17.0)" />
-        <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[16.2, 17.0)" />
-        <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[16.2, 17.0)" />
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.10, 17.0)" />
+        <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[16.10, 17.0)" />
+        <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[16.10, 17.0)" />
     </Installation>
     <Dependencies>
         <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
         <Dependency Id="Microsoft.VisualStudio.MPF.15.0" DisplayName="Visual Studio MPF 15.0" d:Source="Installed" Version="[15.0]" />
     </Dependencies>
     <Prerequisites>
-        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[16.2, 17.0)" DisplayName="Visual Studio core editor" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[16.10, 17.0)" DisplayName="Visual Studio core editor" />
     </Prerequisites>
     <Assets>
         <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
-        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="File" Path="CodeStream.VisualStudio.pkgdef" />
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="File" Path="..\resources\CodeStream.VisualStudio.pkgdef" />
         <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-    </Assets> 
+        <Asset Type="Microsoft.VisualStudio.CodeLensComponent" d:Source="Project" d:ProjectName="CodeStream.VisualStudio.CodeLens" Path="|CodeStream.VisualStudio.CodeLens|" />
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="CodeStream.VisualStudio.Services" Path="|CodeStream.VisualStudio.Services|" />
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="CodeStream.VisualStudio.Core" Path="|CodeStream.VisualStudio.Core|" />
+    </Assets>
 </PackageManifest>

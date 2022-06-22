@@ -12,7 +12,7 @@ using CodeStream.VisualStudio.Framework.Models;
 using Newtonsoft.Json;
 using Serilog;
 
-namespace CodeStream.VisualStudio.Services2 {
+namespace CodeStream.VisualStudio.Services {
 
 	[Export(typeof(IHttpClientService))]
 	[PartCreationPolicy(CreationPolicy.Shared)]

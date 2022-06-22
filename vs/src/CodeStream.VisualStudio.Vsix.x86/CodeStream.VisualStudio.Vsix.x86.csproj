@@ -1,322 +1,798 @@
-﻿<Project>
-
-	<Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
-
-	<PropertyGroup>
-		<OutputType>Library</OutputType>
-		<AssemblyName>CodeStream.VisualStudio.Vsix.x86</AssemblyName>
-		<RootNamespace>CodeStream.VisualStudio.Vsix.x86</RootNamespace>
-
-		<StartAction>Program</StartAction>
-		<StartProgram>$(DevEnvDir)devenv.exe</StartProgram>
-		<StartArguments>/rootSuffix Exp</StartArguments>
-
-		<!-- VSIX Items -->
-		<UseCodebase>true</UseCodebase>
-		<TargetVsixContainerName>codestream-vs.vsix</TargetVsixContainerName>
-		<DeployExtension>false</DeployExtension>
-		<GeneratePkgDefFile>true</GeneratePkgDefFile>
-		<IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
-		<IncludeDebugSymbolsInVSIXContainer>true</IncludeDebugSymbolsInVSIXContainer>
-		<IncludeDebugSymbolsInLocalVSIXDeployment>true</IncludeDebugSymbolsInLocalVSIXDeployment>
-		<CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
-		<CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
-		<GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-		<GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-		<GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-		<GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-		<VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-	</PropertyGroup>
-
-	<!-- Special Files -->
-	<ItemGroup>
-
-		<Content Include="..\resources\codestream.codestream" Link="codestream.codestream" IncludeInVSIX="true">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Include="..\resources\CodeStream.VisualStudio.pkgdef" Link="CodeStream.VisualStudio.pkgdef" />
-		<ContentManifest Include="..\resources\ContentManifest.json" Link="ContentManifest.json" />
-
-		<Compile Update="CodeStreamPackage.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>CodeStreamPackage.vsct</DependentUpon>
-		</Compile>
-
-		<VSCTCompile Update="CodeStreamPackage.vsct">
-			<Generator>VsctGenerator</Generator>
-			<LastGenOutput>CodeStreamPackage.cs</LastGenOutput>
-			<ResourceName>Menus.ctmenu</ResourceName>
-		</VSCTCompile>
-
-		<EmbeddedResource Include="..\resources\VSPackage.resx" Link="VSPackage.resx">
-			<MergeWithCTO>true</MergeWithCTO>
-			<ManifestResourceName>VSPackage</ManifestResourceName>
-		</EmbeddedResource>
-		<EmbeddedResource Include="..\resources\teamdev.licenses" Link="teamdev.licenses" />
-	</ItemGroup>
-
-	<!-- Webview -->
-	<ItemGroup>
-		<Content Include="..\resources\dist\webview\webview.css" Link="dist\webview\webview.css" IncludeInVSIX="true">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Include="..\resources\dist\webview\webview.html" Link="dist\webview\webview.html" IncludeInVSIX="true">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Include="..\resources\dist\webview\newrelic-browser.js" Link="dist\webview\newrelic-browser.js" IncludeInVSIX="true">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Include="..\resources\dist\webview\webview-data.js" Link="dist\webview\webview-data.js" IncludeInVSIX="true">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Include="..\resources\dist\webview\webview.js" Link="dist\webview\webview.js" IncludeInVSIX="true">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-
-	<!-- Agent -->
-	<ItemGroup Condition="'$(Configuration)'=='Debug'">
-		<Content Include="..\resources\dist\agent-pkg.js.map" Link="dist\agent-pkg.js.map" IncludeInVSIX="true">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Include="..\resources\dist\agent.js" Link="dist\agent.js" IncludeInVSIX="true">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(Configuration)'=='Release'">
-		<Content Include="..\resources\dist\agent.exe" Link="dist\agent.exe" IncludeInVSIX="true">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Include="..\resources\CHANGELOG.txt" Link="CHANGELOG.txt" IncludeInVSIX="true" />
-		<Content Include="..\resources\ui\webview\index.html" Link="ui\webview\index.html" />
-		<Content Include="..\resources\ui\webview\theme.css" Link="ui\webview\theme.css" />
-		<Content Include="..\resources\ui\webview\waiting.html" Link="ui\webview\waiting.html" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.VisualStudio.SDK" Version="16.9.31025.194" />
-		<PackageReference Include="Microsoft.VSSDK.BuildTools" Version="16.11.63" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\CodeStream.VisualStudio.CodeLens\CodeStream.VisualStudio.CodeLens.csproj" />
-		<ProjectReference Include="..\CodeStream.VisualStudio.Core\CodeStream.VisualStudio.Core.csproj" />
-		<ProjectReference Include="..\CodeStream.VisualStudio.Framework\CodeStream.VisualStudio.Framework.csproj" />
-		<ProjectReference Include="..\CodeStream.VisualStudio.Services\CodeStream.VisualStudio.Services.csproj" />
-		<ProjectReference Include="..\CodeStream.VisualStudio.Shell.2019\CodeStream.VisualStudio.Shell.2019.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Include="..\resources\assets\codestream.png" Link="resources\assets\codestream.png" />
-		<Content Include="..\resources\assets\icons16\marker-comment-aqua.png" Link="resources\assets\icons16\marker-comment-aqua.png" />
-		<Content Include="..\resources\assets\icons16\marker-comment-blue.png" Link="resources\assets\icons16\marker-comment-blue.png" />
-		<Content Include="..\resources\assets\icons16\marker-comment-gray.png" Link="resources\assets\icons16\marker-comment-gray.png" />
-		<Content Include="..\resources\assets\icons16\marker-comment-green.png" Link="resources\assets\icons16\marker-comment-green.png" />
-		<Content Include="..\resources\assets\icons16\marker-comment-orange.png" Link="resources\assets\icons16\marker-comment-orange.png" />
-		<Content Include="..\resources\assets\icons16\marker-comment-purple.png" Link="resources\assets\icons16\marker-comment-purple.png" />
-		<Content Include="..\resources\assets\icons16\marker-comment-red.png" Link="resources\assets\icons16\marker-comment-red.png" />
-		<Content Include="..\resources\assets\icons16\marker-comment-yellow.png" Link="resources\assets\icons16\marker-comment-yellow.png" />
-		<Content Include="..\resources\assets\icons16\marker-fr-blue.png" Link="resources\assets\icons16\marker-fr-blue.png" />
-		<Content Include="..\resources\assets\icons16\marker-issue-aqua.png" Link="resources\assets\icons16\marker-issue-aqua.png" />
-		<Content Include="..\resources\assets\icons16\marker-issue-blue.png" Link="resources\assets\icons16\marker-issue-blue.png" />
-		<Content Include="..\resources\assets\icons16\marker-issue-gray.png" Link="resources\assets\icons16\marker-issue-gray.png" />
-		<Content Include="..\resources\assets\icons16\marker-issue-green.png" Link="resources\assets\icons16\marker-issue-green.png" />
-		<Content Include="..\resources\assets\icons16\marker-issue-orange.png" Link="resources\assets\icons16\marker-issue-orange.png" />
-		<Content Include="..\resources\assets\icons16\marker-issue-purple.png" Link="resources\assets\icons16\marker-issue-purple.png" />
-		<Content Include="..\resources\assets\icons16\marker-issue-red.png" Link="resources\assets\icons16\marker-issue-red.png" />
-		<Content Include="..\resources\assets\icons16\marker-issue-yellow.png" Link="resources\assets\icons16\marker-issue-yellow.png" />
-		<Content Include="..\resources\assets\icons16\marker-pr-aqua.png" Link="resources\assets\icons16\marker-pr-aqua.png" />
-		<Content Include="..\resources\assets\icons16\marker-pr-blue.png" Link="resources\assets\icons16\marker-pr-blue.png" />
-		<Content Include="..\resources\assets\icons16\marker-pr-gray.png" Link="resources\assets\icons16\marker-pr-gray.png" />
-		<Content Include="..\resources\assets\icons16\marker-pr-green.png" Link="resources\assets\icons16\marker-pr-green.png" />
-		<Content Include="..\resources\assets\icons16\marker-pr-orange.png" Link="resources\assets\icons16\marker-pr-orange.png" />
-		<Content Include="..\resources\assets\icons16\marker-pr-purple.png" Link="resources\assets\icons16\marker-pr-purple.png" />
-		<Content Include="..\resources\assets\icons16\marker-pr-red.png" Link="resources\assets\icons16\marker-pr-red.png" />
-		<Content Include="..\resources\assets\icons16\marker-pr-yellow.png" Link="resources\assets\icons16\marker-pr-yellow.png" />
-		<Content Include="..\resources\assets\icons16\marker-pr.png" Link="resources\assets\icons16\marker-pr.png" />
-		<Content Include="..\resources\assets\marker-add-comment-aqua.png" Link="resources\assets\marker-add-comment-aqua.png" />
-		<Content Include="..\resources\assets\marker-add-comment-blue.png" Link="resources\assets\marker-add-comment-blue.png" />
-		<Content Include="..\resources\assets\marker-add-comment-gray.png" Link="resources\assets\marker-add-comment-gray.png" />
-		<Content Include="..\resources\assets\marker-add-comment-green.png" Link="resources\assets\marker-add-comment-green.png" />
-		<Content Include="..\resources\assets\marker-add-comment-orange.png" Link="resources\assets\marker-add-comment-orange.png" />
-		<Content Include="..\resources\assets\marker-add-comment-purple.png" Link="resources\assets\marker-add-comment-purple.png" />
-		<Content Include="..\resources\assets\marker-add-comment-red.png" Link="resources\assets\marker-add-comment-red.png" />
-		<Content Include="..\resources\assets\marker-add-comment-yellow.png" Link="resources\assets\marker-add-comment-yellow.png" />
-		<Content Include="..\resources\assets\marker-bookmark-aqua.png" Link="resources\assets\marker-bookmark-aqua.png" />
-		<Content Include="..\resources\assets\marker-bookmark-blue.png" Link="resources\assets\marker-bookmark-blue.png" />
-		<Content Include="..\resources\assets\marker-bookmark-gray.png" Link="resources\assets\marker-bookmark-gray.png" />
-		<Content Include="..\resources\assets\marker-bookmark-green.png" Link="resources\assets\marker-bookmark-green.png" />
-		<Content Include="..\resources\assets\marker-bookmark-orange.png" Link="resources\assets\marker-bookmark-orange.png" />
-		<Content Include="..\resources\assets\marker-bookmark-purple.png" Link="resources\assets\marker-bookmark-purple.png" />
-		<Content Include="..\resources\assets\marker-bookmark-red.png" Link="resources\assets\marker-bookmark-red.png" />
-		<Content Include="..\resources\assets\marker-bookmark-yellow.png" Link="resources\assets\marker-bookmark-yellow.png" />
-		<Content Include="..\resources\assets\marker-comment-aqua.png" Link="resources\assets\marker-comment-aqua.png" />
-		<Content Include="..\resources\assets\marker-comment-blue.png" Link="resources\assets\marker-comment-blue.png" />
-		<Content Include="..\resources\assets\marker-comment-gray.png" Link="resources\assets\marker-comment-gray.png" />
-		<Content Include="..\resources\assets\marker-comment-green.png" Link="resources\assets\marker-comment-green.png" />
-		<Content Include="..\resources\assets\marker-comment-orange.png" Link="resources\assets\marker-comment-orange.png" />
-		<Content Include="..\resources\assets\marker-comment-purple.png" Link="resources\assets\marker-comment-purple.png" />
-		<Content Include="..\resources\assets\marker-comment-red.png" Link="resources\assets\marker-comment-red.png" />
-		<Content Include="..\resources\assets\marker-comment-yellow.png" Link="resources\assets\marker-comment-yellow.png" />
-		<Content Include="..\resources\assets\marker-issue-aqua.png" Link="resources\assets\marker-issue-aqua.png" />
-		<Content Include="..\resources\assets\marker-issue-blue.png" Link="resources\assets\marker-issue-blue.png" />
-		<Content Include="..\resources\assets\marker-issue-gray.png" Link="resources\assets\marker-issue-gray.png" />
-		<Content Include="..\resources\assets\marker-issue-green.png" Link="resources\assets\marker-issue-green.png" />
-		<Content Include="..\resources\assets\marker-issue-orange.png" Link="resources\assets\marker-issue-orange.png" />
-		<Content Include="..\resources\assets\marker-issue-purple.png" Link="resources\assets\marker-issue-purple.png" />
-		<Content Include="..\resources\assets\marker-issue-red.png" Link="resources\assets\marker-issue-red.png" />
-		<Content Include="..\resources\assets\marker-issue-yellow.png" Link="resources\assets\marker-issue-yellow.png" />
-		<Content Include="..\resources\assets\marker-pr.png" Link="resources\assets\marker-pr.png" />
-		<Content Include="..\resources\assets\marker-prcomment-aqua.png" Link="resources\assets\marker-prcomment-aqua.png" />
-		<Content Include="..\resources\assets\marker-prcomment-blue.png" Link="resources\assets\marker-prcomment-blue.png" />
-		<Content Include="..\resources\assets\marker-prcomment-gray.png" Link="resources\assets\marker-prcomment-gray.png" />
-		<Content Include="..\resources\assets\marker-prcomment-green.png" Link="resources\assets\marker-prcomment-green.png" />
-		<Content Include="..\resources\assets\marker-prcomment-orange.png" Link="resources\assets\marker-prcomment-orange.png" />
-		<Content Include="..\resources\assets\marker-prcomment-purple.png" Link="resources\assets\marker-prcomment-purple.png" />
-		<Content Include="..\resources\assets\marker-prcomment-red.png" Link="resources\assets\marker-prcomment-red.png" />
-		<Content Include="..\resources\assets\marker-prcomment-yellow.png" Link="resources\assets\marker-prcomment-yellow.png" />
-		<Content Include="..\resources\assets\marker-pull-request-aqua.png" Link="resources\assets\marker-pull-request-aqua.png" />
-		<Content Include="..\resources\assets\marker-pull-request-blue.png" Link="resources\assets\marker-pull-request-blue.png" />
-		<Content Include="..\resources\assets\marker-pull-request-gray.png" Link="resources\assets\marker-pull-request-gray.png" />
-		<Content Include="..\resources\assets\marker-pull-request-green.png" Link="resources\assets\marker-pull-request-green.png" />
-		<Content Include="..\resources\assets\marker-pull-request-orange.png" Link="resources\assets\marker-pull-request-orange.png" />
-		<Content Include="..\resources\assets\marker-pull-request-purple.png" Link="resources\assets\marker-pull-request-purple.png" />
-		<Content Include="..\resources\assets\marker-pull-request-red.png" Link="resources\assets\marker-pull-request-red.png" />
-		<Content Include="..\resources\assets\marker-pull-request-yellow.png" Link="resources\assets\marker-pull-request-yellow.png" />
-		<Content Include="..\resources\assets\marker-question-aqua.png" Link="resources\assets\marker-question-aqua.png" />
-		<Content Include="..\resources\assets\marker-question-blue.png" Link="resources\assets\marker-question-blue.png" />
-		<Content Include="..\resources\assets\marker-question-gray.png" Link="resources\assets\marker-question-gray.png" />
-		<Content Include="..\resources\assets\marker-question-green.png" Link="resources\assets\marker-question-green.png" />
-		<Content Include="..\resources\assets\marker-question-orange.png" Link="resources\assets\marker-question-orange.png" />
-		<Content Include="..\resources\assets\marker-question-purple.png" Link="resources\assets\marker-question-purple.png" />
-		<Content Include="..\resources\assets\marker-question-red.png" Link="resources\assets\marker-question-red.png" />
-		<Content Include="..\resources\assets\marker-question-yellow.png" Link="resources\assets\marker-question-yellow.png" />
-		<Content Include="..\resources\assets\marker-trap-aqua.png" Link="resources\assets\marker-trap-aqua.png" />
-		<Content Include="..\resources\assets\marker-trap-blue.png" Link="resources\assets\marker-trap-blue.png" />
-		<Content Include="..\resources\assets\marker-trap-gray.png" Link="resources\assets\marker-trap-gray.png" />
-		<Content Include="..\resources\assets\marker-trap-green.png" Link="resources\assets\marker-trap-green.png" />
-		<Content Include="..\resources\assets\marker-trap-orange.png" Link="resources\assets\marker-trap-orange.png" />
-		<Content Include="..\resources\assets\marker-trap-purple.png" Link="resources\assets\marker-trap-purple.png" />
-		<Content Include="..\resources\assets\marker-trap-red.png" Link="resources\assets\marker-trap-red.png" />
-		<Content Include="..\resources\assets\marker-trap-yellow.png" Link="resources\assets\marker-trap-yellow.png" />
-		<Content Include="..\resources\assets\codestream.svg" Link="resources\assets\codestream.svg" />
-		<Content Include="..\resources\assets\marker-add-comment-aqua.svg" Link="resources\assets\marker-add-comment-aqua.svg" />
-		<Content Include="..\resources\assets\marker-add-comment-blue.svg" Link="resources\assets\marker-add-comment-blue.svg" />
-		<Content Include="..\resources\assets\marker-add-comment-gray.svg" Link="resources\assets\marker-add-comment-gray.svg" />
-		<Content Include="..\resources\assets\marker-add-comment-green.svg" Link="resources\assets\marker-add-comment-green.svg" />
-		<Content Include="..\resources\assets\marker-add-comment-orange.svg" Link="resources\assets\marker-add-comment-orange.svg" />
-		<Content Include="..\resources\assets\marker-add-comment-purple.svg" Link="resources\assets\marker-add-comment-purple.svg" />
-		<Content Include="..\resources\assets\marker-add-comment-red.svg" Link="resources\assets\marker-add-comment-red.svg" />
-		<Content Include="..\resources\assets\marker-add-comment-yellow.svg" Link="resources\assets\marker-add-comment-yellow.svg" />
-		<Content Include="..\resources\assets\marker-bookmark-aqua.svg" Link="resources\assets\marker-bookmark-aqua.svg" />
-		<Content Include="..\resources\assets\marker-bookmark-blue.svg" Link="resources\assets\marker-bookmark-blue.svg" />
-		<Content Include="..\resources\assets\marker-bookmark-gray.svg" Link="resources\assets\marker-bookmark-gray.svg" />
-		<Content Include="..\resources\assets\marker-bookmark-green.svg" Link="resources\assets\marker-bookmark-green.svg" />
-		<Content Include="..\resources\assets\marker-bookmark-orange.svg" Link="resources\assets\marker-bookmark-orange.svg" />
-		<Content Include="..\resources\assets\marker-bookmark-purple.svg" Link="resources\assets\marker-bookmark-purple.svg" />
-		<Content Include="..\resources\assets\marker-bookmark-red.svg" Link="resources\assets\marker-bookmark-red.svg" />
-		<Content Include="..\resources\assets\marker-bookmark-yellow.svg" Link="resources\assets\marker-bookmark-yellow.svg" />
-		<Content Include="..\resources\assets\marker-codestream.svg" Link="resources\assets\marker-codestream.svg" />
-		<Content Include="..\resources\assets\marker-comment-aqua.svg" Link="resources\assets\marker-comment-aqua.svg" />
-		<Content Include="..\resources\assets\marker-comment-blue.svg" Link="resources\assets\marker-comment-blue.svg" />
-		<Content Include="..\resources\assets\marker-comment-gray.svg" Link="resources\assets\marker-comment-gray.svg" />
-		<Content Include="..\resources\assets\marker-comment-green.svg" Link="resources\assets\marker-comment-green.svg" />
-		<Content Include="..\resources\assets\marker-comment-hollow.svg" Link="resources\assets\marker-comment-hollow.svg" />
-		<Content Include="..\resources\assets\marker-comment-orange.svg" Link="resources\assets\marker-comment-orange.svg" />
-		<Content Include="..\resources\assets\marker-comment-purple.svg" Link="resources\assets\marker-comment-purple.svg" />
-		<Content Include="..\resources\assets\marker-comment-red.svg" Link="resources\assets\marker-comment-red.svg" />
-		<Content Include="..\resources\assets\marker-comment-yellow.svg" Link="resources\assets\marker-comment-yellow.svg" />
-		<Content Include="..\resources\assets\marker-comment.svg" Link="resources\assets\marker-comment.svg" />
-		<Content Include="..\resources\assets\marker-fr-blue.svg" Link="resources\assets\marker-fr-blue.svg" />
-		<Content Include="..\resources\assets\marker-fr.svg" Link="resources\assets\marker-fr.svg" />
-		<Content Include="..\resources\assets\marker-issue-aqua.svg" Link="resources\assets\marker-issue-aqua.svg" />
-		<Content Include="..\resources\assets\marker-issue-blue.svg" Link="resources\assets\marker-issue-blue.svg" />
-		<Content Include="..\resources\assets\marker-issue-gray.svg" Link="resources\assets\marker-issue-gray.svg" />
-		<Content Include="..\resources\assets\marker-issue-green.svg" Link="resources\assets\marker-issue-green.svg" />
-		<Content Include="..\resources\assets\marker-issue-orange.svg" Link="resources\assets\marker-issue-orange.svg" />
-		<Content Include="..\resources\assets\marker-issue-purple.svg" Link="resources\assets\marker-issue-purple.svg" />
-		<Content Include="..\resources\assets\marker-issue-red.svg" Link="resources\assets\marker-issue-red.svg" />
-		<Content Include="..\resources\assets\marker-issue-yellow.svg" Link="resources\assets\marker-issue-yellow.svg" />
-		<Content Include="..\resources\assets\marker-prcomment-aqua.svg" Link="resources\assets\marker-prcomment-aqua.svg" />
-		<Content Include="..\resources\assets\marker-prcomment-blue.svg" Link="resources\assets\marker-prcomment-blue.svg" />
-		<Content Include="..\resources\assets\marker-prcomment-gray.svg" Link="resources\assets\marker-prcomment-gray.svg" />
-		<Content Include="..\resources\assets\marker-prcomment-green.svg" Link="resources\assets\marker-prcomment-green.svg" />
-		<Content Include="..\resources\assets\marker-prcomment-orange.svg" Link="resources\assets\marker-prcomment-orange.svg" />
-		<Content Include="..\resources\assets\marker-prcomment-purple.svg" Link="resources\assets\marker-prcomment-purple.svg" />
-		<Content Include="..\resources\assets\marker-prcomment-red.svg" Link="resources\assets\marker-prcomment-red.svg" />
-		<Content Include="..\resources\assets\marker-prcomment-yellow.svg" Link="resources\assets\marker-prcomment-yellow.svg" />
-		<Content Include="..\resources\assets\marker-pull-request-aqua.svg" Link="resources\assets\marker-pull-request-aqua.svg" />
-		<Content Include="..\resources\assets\marker-pull-request-blue.svg" Link="resources\assets\marker-pull-request-blue.svg" />
-		<Content Include="..\resources\assets\marker-pull-request-gray.svg" Link="resources\assets\marker-pull-request-gray.svg" />
-		<Content Include="..\resources\assets\marker-pull-request-green.svg" Link="resources\assets\marker-pull-request-green.svg" />
-		<Content Include="..\resources\assets\marker-pull-request-orange.svg" Link="resources\assets\marker-pull-request-orange.svg" />
-		<Content Include="..\resources\assets\marker-pull-request-purple.svg" Link="resources\assets\marker-pull-request-purple.svg" />
-		<Content Include="..\resources\assets\marker-pull-request-red.svg" Link="resources\assets\marker-pull-request-red.svg" />
-		<Content Include="..\resources\assets\marker-pull-request-yellow.svg" Link="resources\assets\marker-pull-request-yellow.svg" />
-		<Content Include="..\resources\assets\marker-question-aqua.svg" Link="resources\assets\marker-question-aqua.svg" />
-		<Content Include="..\resources\assets\marker-question-blue.svg" Link="resources\assets\marker-question-blue.svg" />
-		<Content Include="..\resources\assets\marker-question-gray.svg" Link="resources\assets\marker-question-gray.svg" />
-		<Content Include="..\resources\assets\marker-question-green.svg" Link="resources\assets\marker-question-green.svg" />
-		<Content Include="..\resources\assets\marker-question-orange.svg" Link="resources\assets\marker-question-orange.svg" />
-		<Content Include="..\resources\assets\marker-question-purple.svg" Link="resources\assets\marker-question-purple.svg" />
-		<Content Include="..\resources\assets\marker-question-red.svg" Link="resources\assets\marker-question-red.svg" />
-		<Content Include="..\resources\assets\marker-question-yellow.svg" Link="resources\assets\marker-question-yellow.svg" />
-		<Content Include="..\resources\assets\marker-trap-aqua.svg" Link="resources\assets\marker-trap-aqua.svg" />
-		<Content Include="..\resources\assets\marker-trap-blue.svg" Link="resources\assets\marker-trap-blue.svg" />
-		<Content Include="..\resources\assets\marker-trap-gray.svg" Link="resources\assets\marker-trap-gray.svg" />
-		<Content Include="..\resources\assets\marker-trap-green.svg" Link="resources\assets\marker-trap-green.svg" />
-		<Content Include="..\resources\assets\marker-trap-orange.svg" Link="resources\assets\marker-trap-orange.svg" />
-		<Content Include="..\resources\assets\marker-trap-purple.svg" Link="resources\assets\marker-trap-purple.svg" />
-		<Content Include="..\resources\assets\marker-trap-red.svg" Link="resources\assets\marker-trap-red.svg" />
-		<Content Include="..\resources\assets\marker-trap-yellow.svg" Link="resources\assets\marker-trap-yellow.svg" />
-		<Content Include="..\resources\assets\presence-online.svg" Link="resources\assets\presence-online.svg" />
-		<None Include="..\resources\assets\README.md" Link="resources\assets\README.md" />
-		<Content Include="..\resources\assets\dark\add.svg" Link="resources\assets\dark\add.svg" />
-		<Content Include="..\resources\assets\dark\channel.svg" Link="resources\assets\dark\channel.svg" />
-		<Content Include="..\resources\assets\dark\close-small.svg" Link="resources\assets\dark\close-small.svg" />
-		<Content Include="..\resources\assets\dark\comment.svg" Link="resources\assets\dark\comment.svg" />
-		<Content Include="..\resources\assets\dark\issue.svg" Link="resources\assets\dark\issue.svg" />
-		<Content Include="..\resources\assets\dark\pull-request.svg" Link="resources\assets\dark\pull-request.svg" />
-		<Content Include="..\resources\assets\dark\refresh.svg" Link="resources\assets\dark\refresh.svg" />
-		<Content Include="..\resources\assets\dark\repository.svg" Link="resources\assets\dark\repository.svg" />
-		<Content Include="..\resources\assets\dark\review.svg" Link="resources\assets\dark\review.svg" />
-		<Content Include="..\resources\assets\icons8\marker-bookmark.svg" Link="resources\assets\icons8\marker-bookmark.svg" />
-		<Content Include="..\resources\assets\icons8\marker-comment.svg" Link="resources\assets\icons8\marker-comment.svg" />
-		<Content Include="..\resources\assets\icons8\marker-issue.svg" Link="resources\assets\icons8\marker-issue.svg" />
-		<Content Include="..\resources\assets\icons8\marker-question.svg" Link="resources\assets\icons8\marker-question.svg" />
-		<Content Include="..\resources\assets\icons8\marker-trap.svg" Link="resources\assets\icons8\marker-trap.svg" />
-		<Content Include="..\resources\assets\icons16\marker-comment.svg" Link="resources\assets\icons16\marker-comment.svg" />
-		<Content Include="..\resources\assets\light\add.svg" Link="resources\assets\light\add.svg" />
-		<Content Include="..\resources\assets\light\channel.svg" Link="resources\assets\light\channel.svg" />
-		<Content Include="..\resources\assets\light\close-small.svg" Link="resources\assets\light\close-small.svg" />
-		<Content Include="..\resources\assets\light\comment.svg" Link="resources\assets\light\comment.svg" />
-		<Content Include="..\resources\assets\light\issue.svg" Link="resources\assets\light\issue.svg" />
-		<Content Include="..\resources\assets\light\pull-request.svg" Link="resources\assets\light\pull-request.svg" />
-		<Content Include="..\resources\assets\light\refresh.svg" Link="resources\assets\light\refresh.svg" />
-		<Content Include="..\resources\assets\light\repository.svg" Link="resources\assets\light\repository.svg" />
-		<Content Include="..\resources\assets\light\review.svg" Link="resources\assets\light\review.svg" />
-		<None Include="..\resources\ui\webview\tsconfig.json" Link="ui\webview\tsconfig.json" />
-		<None Include="..\resources\ui\webview\styles\ui-variables.less" Link="ui\webview\styles\ui-variables.less" />
-		<None Include="..\resources\ui\webview\styles\webview.less" Link="ui\webview\styles\webview.less" />
-		<None Include="..\resources\CodeStream.VisualStudio.Settings.json" Link="CodeStream.VisualStudio.Settings.json" />
-	</ItemGroup>
-
-	<Import Project="..\CodeStream.VisualStudio.Shared\CodeStream.VisualStudio.Shared.projitems" Label="Shared" />
-	<Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
-	<Import Project="$(VSToolsPath)\vssdk\Microsoft.VSSDK.targets" Condition="'$(VSToolsPath)' != ''" />
-
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command="powershell -ExecutionPolicy Unrestricted $(SolutionDir)Pre-Build.ps1 -ConfigurationName $(ConfigurationName) -SolutionDir $(SolutionDir) -ProjectDir $(ProjectDir)..\resources" />
-	</Target>
-
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="powershell -ExecutionPolicy Unrestricted $(SolutionDir)Post-Build.ps1 -ConfigurationName $(ConfigurationName) -SolutionDir $(SolutionDir) -TargetDir $(TargetDir)" />
-	</Target>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.VSSDK.BuildTools.15.9.3039\build\Microsoft.VSSDK.BuildTools.props" Condition="Exists('..\packages\Microsoft.VSSDK.BuildTools.15.9.3039\build\Microsoft.VSSDK.BuildTools.props')" />
+  <PropertyGroup>
+    <TargetVsixContainerName>codestream-vs.vsix</TargetVsixContainerName>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <UseCodebase>true</UseCodebase>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;X86</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>true</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>true</IncludeDebugSymbolsInLocalVSIXDeployment>
+    <CreateVsixContainer>True</CreateVsixContainer>
+    <DeployExtension>True</DeployExtension>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{EB360D87-8769-44A4-B837-8BC3279070C9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CodeStream.VisualStudio.Vsix.x86</RootNamespace>
+    <AssemblyName>CodeStream.VisualStudio.Vsix.x86</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <GeneratePkgDefFile>true</GeneratePkgDefFile>
+    <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>true</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>true</IncludeDebugSymbolsInLocalVSIXDeployment>
+    <CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
+    <StartAction>Program</StartAction>
+    <StartProgram Condition="'$(DevEnvDir)' != ''">$(DevEnvDir)devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="..\resources\assets\codestream.png">
+      <Link>resources\assets\codestream.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\resources\assets\codestream.svg">
+      <Link>resources\assets\codestream.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\dark\add.svg">
+      <Link>resources\assets\dark\add.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\dark\channel.svg">
+      <Link>resources\assets\dark\channel.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\dark\close-small.svg">
+      <Link>resources\assets\dark\close-small.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\dark\comment.svg">
+      <Link>resources\assets\dark\comment.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\dark\issue.svg">
+      <Link>resources\assets\dark\issue.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\dark\pull-request.svg">
+      <Link>resources\assets\dark\pull-request.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\dark\refresh.svg">
+      <Link>resources\assets\dark\refresh.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\dark\repository.svg">
+      <Link>resources\assets\dark\repository.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\dark\review.svg">
+      <Link>resources\assets\dark\review.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-comment-aqua.png">
+      <Link>resources\assets\icons16\marker-comment-aqua.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-comment-blue.png">
+      <Link>resources\assets\icons16\marker-comment-blue.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-comment-gray.png">
+      <Link>resources\assets\icons16\marker-comment-gray.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-comment-green.png">
+      <Link>resources\assets\icons16\marker-comment-green.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-comment-orange.png">
+      <Link>resources\assets\icons16\marker-comment-orange.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-comment-purple.png">
+      <Link>resources\assets\icons16\marker-comment-purple.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-comment-red.png">
+      <Link>resources\assets\icons16\marker-comment-red.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-comment-yellow.png">
+      <Link>resources\assets\icons16\marker-comment-yellow.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-comment.svg">
+      <Link>resources\assets\icons16\marker-comment.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-fr-blue.png">
+      <Link>resources\assets\icons16\marker-fr-blue.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-issue-aqua.png">
+      <Link>resources\assets\icons16\marker-issue-aqua.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-issue-blue.png">
+      <Link>resources\assets\icons16\marker-issue-blue.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-issue-gray.png">
+      <Link>resources\assets\icons16\marker-issue-gray.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-issue-green.png">
+      <Link>resources\assets\icons16\marker-issue-green.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-issue-orange.png">
+      <Link>resources\assets\icons16\marker-issue-orange.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-issue-purple.png">
+      <Link>resources\assets\icons16\marker-issue-purple.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-issue-red.png">
+      <Link>resources\assets\icons16\marker-issue-red.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-issue-yellow.png">
+      <Link>resources\assets\icons16\marker-issue-yellow.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-pr-aqua.png">
+      <Link>resources\assets\icons16\marker-pr-aqua.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-pr-blue.png">
+      <Link>resources\assets\icons16\marker-pr-blue.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-pr-gray.png">
+      <Link>resources\assets\icons16\marker-pr-gray.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-pr-green.png">
+      <Link>resources\assets\icons16\marker-pr-green.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-pr-orange.png">
+      <Link>resources\assets\icons16\marker-pr-orange.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-pr-purple.png">
+      <Link>resources\assets\icons16\marker-pr-purple.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-pr-red.png">
+      <Link>resources\assets\icons16\marker-pr-red.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-pr-yellow.png">
+      <Link>resources\assets\icons16\marker-pr-yellow.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons16\marker-pr.png">
+      <Link>resources\assets\icons16\marker-pr.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons8\marker-bookmark.svg">
+      <Link>resources\assets\icons8\marker-bookmark.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons8\marker-comment.svg">
+      <Link>resources\assets\icons8\marker-comment.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons8\marker-issue.svg">
+      <Link>resources\assets\icons8\marker-issue.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons8\marker-question.svg">
+      <Link>resources\assets\icons8\marker-question.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\icons8\marker-trap.svg">
+      <Link>resources\assets\icons8\marker-trap.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\light\add.svg">
+      <Link>resources\assets\light\add.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\light\channel.svg">
+      <Link>resources\assets\light\channel.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\light\close-small.svg">
+      <Link>resources\assets\light\close-small.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\light\comment.svg">
+      <Link>resources\assets\light\comment.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\light\issue.svg">
+      <Link>resources\assets\light\issue.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\light\pull-request.svg">
+      <Link>resources\assets\light\pull-request.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\light\refresh.svg">
+      <Link>resources\assets\light\refresh.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\light\repository.svg">
+      <Link>resources\assets\light\repository.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\light\review.svg">
+      <Link>resources\assets\light\review.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-aqua.png">
+      <Link>resources\assets\marker-add-comment-aqua.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-aqua.svg">
+      <Link>resources\assets\marker-add-comment-aqua.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-blue.png">
+      <Link>resources\assets\marker-add-comment-blue.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-blue.svg">
+      <Link>resources\assets\marker-add-comment-blue.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-gray.png">
+      <Link>resources\assets\marker-add-comment-gray.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-gray.svg">
+      <Link>resources\assets\marker-add-comment-gray.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-green.png">
+      <Link>resources\assets\marker-add-comment-green.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-green.svg">
+      <Link>resources\assets\marker-add-comment-green.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-orange.png">
+      <Link>resources\assets\marker-add-comment-orange.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-orange.svg">
+      <Link>resources\assets\marker-add-comment-orange.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-purple.png">
+      <Link>resources\assets\marker-add-comment-purple.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-purple.svg">
+      <Link>resources\assets\marker-add-comment-purple.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-red.png">
+      <Link>resources\assets\marker-add-comment-red.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-red.svg">
+      <Link>resources\assets\marker-add-comment-red.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-yellow.png">
+      <Link>resources\assets\marker-add-comment-yellow.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-add-comment-yellow.svg">
+      <Link>resources\assets\marker-add-comment-yellow.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-aqua.png">
+      <Link>resources\assets\marker-bookmark-aqua.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-aqua.svg">
+      <Link>resources\assets\marker-bookmark-aqua.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-blue.png">
+      <Link>resources\assets\marker-bookmark-blue.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-blue.svg">
+      <Link>resources\assets\marker-bookmark-blue.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-gray.png">
+      <Link>resources\assets\marker-bookmark-gray.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-gray.svg">
+      <Link>resources\assets\marker-bookmark-gray.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-green.png">
+      <Link>resources\assets\marker-bookmark-green.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-green.svg">
+      <Link>resources\assets\marker-bookmark-green.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-orange.png">
+      <Link>resources\assets\marker-bookmark-orange.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-orange.svg">
+      <Link>resources\assets\marker-bookmark-orange.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-purple.png">
+      <Link>resources\assets\marker-bookmark-purple.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-purple.svg">
+      <Link>resources\assets\marker-bookmark-purple.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-red.png">
+      <Link>resources\assets\marker-bookmark-red.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-red.svg">
+      <Link>resources\assets\marker-bookmark-red.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-yellow.png">
+      <Link>resources\assets\marker-bookmark-yellow.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-bookmark-yellow.svg">
+      <Link>resources\assets\marker-bookmark-yellow.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-codestream.svg">
+      <Link>resources\assets\marker-codestream.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-aqua.png">
+      <Link>resources\assets\marker-comment-aqua.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-aqua.svg">
+      <Link>resources\assets\marker-comment-aqua.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-blue.png">
+      <Link>resources\assets\marker-comment-blue.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-blue.svg">
+      <Link>resources\assets\marker-comment-blue.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-gray.png">
+      <Link>resources\assets\marker-comment-gray.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-gray.svg">
+      <Link>resources\assets\marker-comment-gray.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-green.png">
+      <Link>resources\assets\marker-comment-green.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-green.svg">
+      <Link>resources\assets\marker-comment-green.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-hollow.svg">
+      <Link>resources\assets\marker-comment-hollow.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-orange.png">
+      <Link>resources\assets\marker-comment-orange.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-orange.svg">
+      <Link>resources\assets\marker-comment-orange.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-purple.png">
+      <Link>resources\assets\marker-comment-purple.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-purple.svg">
+      <Link>resources\assets\marker-comment-purple.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-red.png">
+      <Link>resources\assets\marker-comment-red.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-red.svg">
+      <Link>resources\assets\marker-comment-red.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-yellow.png">
+      <Link>resources\assets\marker-comment-yellow.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment-yellow.svg">
+      <Link>resources\assets\marker-comment-yellow.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-comment.svg">
+      <Link>resources\assets\marker-comment.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-fr-blue.svg">
+      <Link>resources\assets\marker-fr-blue.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-fr.svg">
+      <Link>resources\assets\marker-fr.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-aqua.png">
+      <Link>resources\assets\marker-issue-aqua.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-aqua.svg">
+      <Link>resources\assets\marker-issue-aqua.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-blue.png">
+      <Link>resources\assets\marker-issue-blue.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-blue.svg">
+      <Link>resources\assets\marker-issue-blue.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-gray.png">
+      <Link>resources\assets\marker-issue-gray.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-gray.svg">
+      <Link>resources\assets\marker-issue-gray.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-green.png">
+      <Link>resources\assets\marker-issue-green.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-green.svg">
+      <Link>resources\assets\marker-issue-green.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-orange.png">
+      <Link>resources\assets\marker-issue-orange.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-orange.svg">
+      <Link>resources\assets\marker-issue-orange.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-purple.png">
+      <Link>resources\assets\marker-issue-purple.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-purple.svg">
+      <Link>resources\assets\marker-issue-purple.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-red.png">
+      <Link>resources\assets\marker-issue-red.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-red.svg">
+      <Link>resources\assets\marker-issue-red.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-yellow.png">
+      <Link>resources\assets\marker-issue-yellow.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-issue-yellow.svg">
+      <Link>resources\assets\marker-issue-yellow.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pr.png">
+      <Link>resources\assets\marker-pr.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-aqua.png">
+      <Link>resources\assets\marker-prcomment-aqua.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-aqua.svg">
+      <Link>resources\assets\marker-prcomment-aqua.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-blue.png">
+      <Link>resources\assets\marker-prcomment-blue.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-blue.svg">
+      <Link>resources\assets\marker-prcomment-blue.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-gray.png">
+      <Link>resources\assets\marker-prcomment-gray.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-gray.svg">
+      <Link>resources\assets\marker-prcomment-gray.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-green.png">
+      <Link>resources\assets\marker-prcomment-green.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-green.svg">
+      <Link>resources\assets\marker-prcomment-green.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-orange.png">
+      <Link>resources\assets\marker-prcomment-orange.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-orange.svg">
+      <Link>resources\assets\marker-prcomment-orange.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-purple.png">
+      <Link>resources\assets\marker-prcomment-purple.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-purple.svg">
+      <Link>resources\assets\marker-prcomment-purple.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-red.png">
+      <Link>resources\assets\marker-prcomment-red.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-red.svg">
+      <Link>resources\assets\marker-prcomment-red.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-yellow.png">
+      <Link>resources\assets\marker-prcomment-yellow.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-prcomment-yellow.svg">
+      <Link>resources\assets\marker-prcomment-yellow.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-aqua.png">
+      <Link>resources\assets\marker-pull-request-aqua.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-aqua.svg">
+      <Link>resources\assets\marker-pull-request-aqua.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-blue.png">
+      <Link>resources\assets\marker-pull-request-blue.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-blue.svg">
+      <Link>resources\assets\marker-pull-request-blue.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-gray.png">
+      <Link>resources\assets\marker-pull-request-gray.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-gray.svg">
+      <Link>resources\assets\marker-pull-request-gray.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-green.png">
+      <Link>resources\assets\marker-pull-request-green.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-green.svg">
+      <Link>resources\assets\marker-pull-request-green.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-orange.png">
+      <Link>resources\assets\marker-pull-request-orange.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-orange.svg">
+      <Link>resources\assets\marker-pull-request-orange.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-purple.png">
+      <Link>resources\assets\marker-pull-request-purple.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-purple.svg">
+      <Link>resources\assets\marker-pull-request-purple.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-red.png">
+      <Link>resources\assets\marker-pull-request-red.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-red.svg">
+      <Link>resources\assets\marker-pull-request-red.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-yellow.png">
+      <Link>resources\assets\marker-pull-request-yellow.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-pull-request-yellow.svg">
+      <Link>resources\assets\marker-pull-request-yellow.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-aqua.png">
+      <Link>resources\assets\marker-question-aqua.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-aqua.svg">
+      <Link>resources\assets\marker-question-aqua.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-blue.png">
+      <Link>resources\assets\marker-question-blue.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-blue.svg">
+      <Link>resources\assets\marker-question-blue.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-gray.png">
+      <Link>resources\assets\marker-question-gray.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-gray.svg">
+      <Link>resources\assets\marker-question-gray.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-green.png">
+      <Link>resources\assets\marker-question-green.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-green.svg">
+      <Link>resources\assets\marker-question-green.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-orange.png">
+      <Link>resources\assets\marker-question-orange.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-orange.svg">
+      <Link>resources\assets\marker-question-orange.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-purple.png">
+      <Link>resources\assets\marker-question-purple.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-purple.svg">
+      <Link>resources\assets\marker-question-purple.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-red.png">
+      <Link>resources\assets\marker-question-red.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-red.svg">
+      <Link>resources\assets\marker-question-red.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-yellow.png">
+      <Link>resources\assets\marker-question-yellow.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-question-yellow.svg">
+      <Link>resources\assets\marker-question-yellow.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-aqua.png">
+      <Link>resources\assets\marker-trap-aqua.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-aqua.svg">
+      <Link>resources\assets\marker-trap-aqua.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-blue.png">
+      <Link>resources\assets\marker-trap-blue.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-blue.svg">
+      <Link>resources\assets\marker-trap-blue.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-gray.png">
+      <Link>resources\assets\marker-trap-gray.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-gray.svg">
+      <Link>resources\assets\marker-trap-gray.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-green.png">
+      <Link>resources\assets\marker-trap-green.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-green.svg">
+      <Link>resources\assets\marker-trap-green.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-orange.png">
+      <Link>resources\assets\marker-trap-orange.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-orange.svg">
+      <Link>resources\assets\marker-trap-orange.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-purple.png">
+      <Link>resources\assets\marker-trap-purple.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-purple.svg">
+      <Link>resources\assets\marker-trap-purple.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-red.png">
+      <Link>resources\assets\marker-trap-red.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-red.svg">
+      <Link>resources\assets\marker-trap-red.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-yellow.png">
+      <Link>resources\assets\marker-trap-yellow.png</Link>
+    </Content>
+    <Content Include="..\resources\assets\marker-trap-yellow.svg">
+      <Link>resources\assets\marker-trap-yellow.svg</Link>
+    </Content>
+    <Content Include="..\resources\assets\presence-online.svg">
+      <Link>resources\assets\presence-online.svg</Link>
+    </Content>
+    <Content Include="..\resources\CHANGELOG.txt">
+      <Link>CHANGELOG.txt</Link>
+    </Content>
+    <Content Include="..\resources\CodeStream.VisualStudio.pkgdef">
+      <Link>CodeStream.VisualStudio.pkgdef</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\resources\CodestreamPackage.ico">
+      <Link>resources\CodestreamPackage.ico</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <EmbeddedResource Include="..\resources\teamdev.licenses">
+      <Link>teamdev.licenses</Link>
+    </EmbeddedResource>
+    <Content Include="..\resources\ui\webview\index.html">
+      <Link>ui\webview\index.html</Link>
+    </Content>
+    <Content Include="..\resources\ui\webview\theme.css">
+      <Link>ui\webview\theme.css</Link>
+    </Content>
+    <Content Include="..\resources\ui\webview\waiting.html">
+      <Link>ui\webview\waiting.html</Link>
+    </Content>
+    <VSCTCompile Include="CodeStreamPackage.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+      <SubType>Designer</SubType>
+      <Generator>VsctGenerator</Generator>
+      <LastGenOutput>CodeStreamPackage.cs</LastGenOutput>
+    </VSCTCompile>
+    <Compile Include="CodeStreamPackage.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CodeStreamPackage.vsct</DependentUpon>
+    </Compile>
+    <Content Include="..\resources\dist\agent.exe" Condition="'$(Configuration)'=='Release'">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <Link>dist\agent.exe</Link>
+    </Content>
+    <Content Include="..\resources\dist\agent-pkg.js.map" Condition="'$(Configuration)'=='Debug'">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <Link>dist\agent-pkg.js.map</Link>
+    </Content>
+    <None Include="..\resources\assets\README.md">
+      <Link>resources\assets\README.md</Link>
+    </None>
+    <Content Include="..\resources\codestream.codestream">
+      <Link>resources\codestream.codestream</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="..\resources\CodeStream.VisualStudio.Settings.json">
+      <Link>CodeStream.VisualStudio.Settings.json</Link>
+    </None>
+    <ContentManifest Include="..\resources\ContentManifest.json">
+      <Link>ContentManifest.json</Link>
+    </ContentManifest>
+    <None Include="..\resources\ui\webview\styles\ui-variables.less">
+      <Link>ui\webview\styles\ui-variables.less</Link>
+    </None>
+    <None Include="..\resources\ui\webview\styles\webview.less">
+      <Link>ui\webview\styles\webview.less</Link>
+    </None>
+    <None Include="..\resources\ui\webview\tsconfig.json">
+      <Link>ui\webview\tsconfig.json</Link>
+    </None>
+    <None Include="source.extension.vsixmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\resources\dist\agent.js" Condition="'$(Configuration)'=='Debug'">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <Link>dist\agent.js</Link>
+    </Content>
+    <Content Include="..\resources\dist\webview\newrelic-browser.js">
+      <Link>dist\webview\newrelic-browser.js</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\resources\dist\webview\webview-data.js">
+      <Link>dist\webview\webview-data.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\resources\dist\webview\webview.css">
+      <Link>dist\webview\webview.css</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\resources\dist\webview\webview.html">
+      <Link>dist\webview\webview.html</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\resources\dist\webview\webview.js">
+      <Link>dist\webview\webview.js</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\resources\VSPackage.resx">
+      <Link>VSPackage.resx</Link>
+      <MergeWithCTO>true</MergeWithCTO>
+      <ManifestResourceName>VSPackage</ManifestResourceName>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\resources\ui\webview\index.ts">
+      <Link>ui\webview\index.ts</Link>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.SDK">
+      <Version>16.10.31321.278</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.SDK.EmbedInteropTypes">
+      <Version>15.0.36</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeStream.VisualStudio.CodeLens\CodeStream.VisualStudio.CodeLens.csproj">
+      <Project>{31eb1b96-34e8-4e37-872d-4ed7363c95d9}</Project>
+      <Name>CodeStream.VisualStudio.CodeLens</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeStream.VisualStudio.Core\CodeStream.VisualStudio.Core.csproj">
+      <Project>{1a29b558-c55a-4769-ad37-69f903ed6eb3}</Project>
+      <Name>CodeStream.VisualStudio.Core</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeStream.VisualStudio.Framework\CodeStream.VisualStudio.Framework.csproj">
+      <Project>{89a17dff-415d-4daf-a489-1f3c25af0c35}</Project>
+      <Name>CodeStream.VisualStudio.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeStream.VisualStudio.Services\CodeStream.VisualStudio.Services.csproj">
+      <Project>{b06f40c7-a8ef-4bb3-a845-ff6714d1bc83}</Project>
+      <Name>CodeStream.VisualStudio.Services</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="..\CodeStream.VisualStudio.Shared\CodeStream.VisualStudio.Shared.projitems" Label="Shared" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <PropertyGroup>
+    <PreBuildEvent>powershell -ExecutionPolicy Unrestricted $(SolutionDir)Pre-Build.ps1 -ConfigurationName $(ConfigurationName) -SolutionDir $(SolutionDir) -ProjectDir $(ProjectDir)..\resources\</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>powershell -ExecutionPolicy Unrestricted $(SolutionDir)Post-Build.ps1 -ConfigurationName $(ConfigurationName) -SolutionDir $(SolutionDir) -TargetDir $(TargetDir)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

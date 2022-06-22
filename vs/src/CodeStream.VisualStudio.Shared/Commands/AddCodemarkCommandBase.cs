@@ -11,9 +11,9 @@ using Serilog;
 using System;
 using System.Threading;
 
-#if X86
+
 using CodeStream.VisualStudio.Vsix.x86;
-#endif
+
 
 namespace CodeStream.VisualStudio.Commands {
 	internal abstract class AddCodemarkCommandBase : VsCommandBase {

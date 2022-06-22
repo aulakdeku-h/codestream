@@ -5,6 +5,7 @@ using Serilog;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using CSConstants = CodeStream.VisualStudio.Framework.Constants;
 
 namespace CodeStream.VisualStudio.Core.LanguageServer {
 	public class LanguageClientActivatorDummy { }
@@ -16,9 +17,9 @@ namespace CodeStream.VisualStudio.Core.LanguageServer {
 			string path = null;
 			try {
 				await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-				path = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Resources", Constants.CodeStreamCodeStream);
+				path = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "Resources", CSConstants.CodeStreamCodeStream);
 
-				var window = dte.OpenFile(EnvDTE.Constants.vsViewKindCode, path);
+				var window = dte.OpenFile(Constants.vsViewKindCode, path);
 				window.Visible = true;
 				window.Close(vsSaveChanges.vsSaveChangesNo);
 				Log.Debug($"{nameof(ActivateAsync)} success for {path}");

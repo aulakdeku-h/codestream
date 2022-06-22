@@ -17,6 +17,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using CodeStream.VisualStudio.Vsix.x86;
 using Task = System.Threading.Tasks.Task;
 
 namespace CodeStream.VisualStudio.Packages {
@@ -111,7 +112,7 @@ namespace CodeStream.VisualStudio.Packages {
 				});
 			}
 			else {
-				Log.Debug($"Skipped {nameof(TryTriggerLspActivationAsync)} for {sessionService.ProjectType}");
+				Log.Debug($"Skipped {nameof(AsyncPackageHelper.TryTriggerLspActivationAsync)} for {sessionService.ProjectType}");
 			}
 		}
 

@@ -1,9 +1,9 @@
 ﻿using System;
-using CodeStream.VisualStudio.Core.Extensions;
 using CodeStream.VisualStudio.Core.Models;
 using CodeStream.VisualStudio.Framework.Extensions;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
+using CSConstants = CodeStream.VisualStudio.Framework.Constants;
 
 namespace CodeStream.VisualStudio.Core.UI.Extensions {
 	public static class TextDocumentExtensions {
@@ -25,7 +25,7 @@ namespace CodeStream.VisualStudio.Core.UI.Extensions {
 				return false;
 			}
 
-			return !td.FilePath.EndsWithIgnoreCase(Core.Constants.CodeStreamCodeStream);
+			return !td.FilePath.EndsWithIgnoreCase(CSConstants.CodeStreamCodeStream);
 		}
 
 		public static bool TryGetTextDocument(this ITextDocumentFactoryService textDocumentFactoryService, IWpfTextView textView, out IVirtualTextDocument textDocument) {

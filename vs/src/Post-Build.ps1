@@ -8,13 +8,12 @@ Write-Host "CS4VS Post-Build.ps1 Starting..."
 Write-Host ""
 Write-Host ""
 
-Write-Host "ProjectDir=$($ProjectDir)"
 Write-Host "SolutionDir=$($SolutionDir)"
 Write-Host "TargetDir=$($TargetDir)"
 Write-Host ""
 
 if ($ConfigurationName -eq "Debug") {
-	pushd ..\..\build
+	pushd ..\..\..\..\..\build
 	& .\Extract-Pdb.ps1
 	popd
 }
